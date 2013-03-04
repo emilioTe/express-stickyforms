@@ -33,7 +33,7 @@ Your `express` application also needs to have `session` and `bodyParser` support
     //
     // Position matters.
     //
-    app.use(require('stickyforms')());
+    app.use(require('express-stickyforms')());
     
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
