@@ -19,8 +19,8 @@ Your `express` application also needs to have `session` and `bodyParser` support
 ### app.js
 
     var express = require('express')
-    , app = express()
-    ;
+      , app = express()
+      ;
     
     var path = require('path');
     
