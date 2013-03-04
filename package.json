@@ -1,0 +1,20 @@
+{
+  "name": "express-stickyforms",
+  "version": "0.0.1",
+  "description": "Persistent form middleware for express.",
+  "url": "https://github.com/emilioTe/express-stickyforms",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emilioTe/express-stickyforms.git"
+  },
+  "keywords": [
+    "persistent",
+    "sticky",
+    "form",
+    "middleware",
+    "express"
+  ],
+  "author": "Emilio Testa <te.emilio@gmail.com>",
+  "license": "MIT"
+}
