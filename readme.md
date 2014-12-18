@@ -1,82 +1,98 @@
 # express-stickyforms
 
-version **1.0.0**
+version **2.0.0**
 
 
 ## Dependencies
+```
+npm install express
+```
 
-    npm install express@3.x.x
-
-Your `express` application also needs to have `session` and `bodyParser` support.
+**Note**: Your `express` application also needs to have `session` support.
 
 
 ## Installation
-    npm install express-stickyforms
+```
+npm install express-stickyforms
+```
 
 
 ## Usage
 
 ### app.js
+```javascript
 
-    var express = require('express')
-      , app = express()
-      ;
-    
-    var path = require('path');
-    
-    app.set('views', __dirname);
-    app.set('view engine', 'jade');
-    app.set('port', 3000);
-    app.use(express.bodyParser());
-    app.use(express.cookieParser('super secret'));
-    app.use(express.session());
-    //
-    // Position matters.
-    //
-    app.use(require('express-stickyforms'));
-    
-    app.use(app.router);
-    app.use(express.static(path.join(__dirname, 'public')));
-    
-    app.get('/', function(req, res) {
-      res.render('index');
-    });
-    
-    app.post('/', function(req, res) {
-      //
-      // Tell your app that you want to be able to
-      // redisplay the user's inputs for this form.
-      req.sticky();
-      
-      res.redirect('/');
-    });
-    
-    require('http').createServer(app).listen(app.get('port'), function() {
-      console.log('stickyforms app running on port %d.', app.get('port'));
-    });
+var express = require("express");
+var app = express();
+
+var bodyParser = require("body-parser");
+var session = require("express-session");
+
+var path = require("path");
+
+app.set("views", __dirname);
+app.set("view engine", "jade");
+app.set("port", 3000);
+app.use(bodyParser.urlencoded());
+app.use(session());
+//
+// Position matters.
+//
+app.use(require("express-stickyforms")());
+//
+app.use(express.static(path.join(__dirname, "public")));
+
+
+
+app.get("/", function(req, res) {
+  
+  var stickiedValue = req.sticky.get("myValue");
+  res.render("index");
+
+});
+
+
+
+app.post("/", function(req, res) {
+
+  //
+  // Tell your app that you want to be able to
+  // redisplay the user's inputs for this form.
+  req.sticky.them();
+  
+  res.redirect("/");
+
+});
+
+
+
+require("http").Server(app).listen(app.get("port"), function() {
+  console.log("stickyforms app running on port %d.", app.get("port"));
+});
+
+```
 
 
 ### index.jade
+```jade
+doctype html
+html
+  head
+    title stickyforms example
 
-    !!!
-    html
-      head
-        title stickyforms example
+  body
+    form(action="/", method="POST")
+      label(for="username") Username
+      
+      input#username(type="text", name="username", value="#{sticky.username}")
+      
+      label(for="password") Password
+      //- You should never sticky a password field!
+      //- Doing so opens your site up to security risks.
+      input#password(type="password", name="password")
+      button(type="submit") Sign in
 
-      body
-        form(action='/', method='post')
-          label(for='username') Username
-          
-          //- #{sticky.username || ''}
-          //- It would be wise to structure your stickys like
-          //- so to avoid template errors.
-          input#username(type='text', name='username', value='#{sticky.username || ''}')
-          
-          label(for='password') Password
-          //- You should never sticky a password field!
-          //- Doing so opens your site up to security risks.
-          input#password(type='password', name='password')
-          button(type='submit') Sign in
+```
 
 
 ## License

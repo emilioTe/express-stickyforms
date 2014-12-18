@@ -1,16 +1,37 @@
-module.exports = function(req, res, next) {
+module.exports = function() {
 
-  if (typeof req.session.sticky === 'undefined') {
-    res.locals.sticky = {};
-  } else {
-    res.locals.sticky = req.session.sticky;
-    delete req.session.sticky;
-  }
+  return function(req, res, next) {
 
-  req.sticky = function() {
-    req.session.sticky = req.body;
+    var session = req.session;
+    var sticky = session && session.sticky;
+    var values = session && sticky && req.session.sticky._values;
+
+
+
+    if (!values) {
+    
+      res.locals.sticky = {};
+
+    } else {
+
+      res.locals.sticky = values;
+      delete req.session.sticky;
+
+    }
+
+
+    
+    req.sticky = {
+    
+      them: function() { req.session.sticky = { _values: req.body }; },
+
+      get: function(key) { return res.locals.sticky && res.locals.sticky[key]; }
+    
+    };
+
+    
+    next();
+
   };
-
-  next();
 
 };
