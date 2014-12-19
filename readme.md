@@ -46,7 +46,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", function(req, res) {
   
-  var stickiedValue = req.sticky.get("myValue");
+  //
+  // Get a key from "sticky"
+  // (returns `undefined` if not found)
+  var stickiedValue = req.sticky.get("username");
+
   res.render("index");
 
 });
