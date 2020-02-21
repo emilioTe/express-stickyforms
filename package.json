@@ -1,12 +1,12 @@
 {
   "name": "express-stickyforms",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Persistent form middleware for express.",
-  "url": "https://github.com/emilioTe/express-stickyforms",
+  "url": "https://github.com/thatemilio/express-stickyforms",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/emilioTe/express-stickyforms.git"
+    "url": "https://github.com/thatemilio/express-stickyforms.git"
   },
   "keywords": [
     "persistent",
